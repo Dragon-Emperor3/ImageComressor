@@ -30,8 +30,8 @@ def compress_image(request):
             destination_folder = 'images/'  # Specify the destination folder within 'staticfiles'
 
             # Get the absolute path to the destination folder
-            destination_path = os.path.join(settings.STATICFILES_DIRS[0], destination_folder) # for static file in compressor
-            #destination_path = os.path.join(settings.STATIC_ROOT, destination_folder) # for deployment
+            #destination_path = os.path.join(settings.STATICFILES_DIRS[0], destination_folder) # for static file in compressor
+            destination_path = os.path.join(settings.STATIC_ROOT, destination_folder) # for deployment
             delete(destination_path)
             # Create the destination folder if it doesn't exist
             os.makedirs(destination_path, exist_ok=True)
@@ -49,8 +49,8 @@ def compress_image(request):
 
 
             # Construct the URL for the uploaded file
-            image_url = os.path.join(settings.STATIC_URL, destination_folder, image.name) # for static files
-            #image_url = os.path.join(settings.STATIC_ROOT, destination_folder, image.name)
+            #image_url = os.path.join(settings.STATIC_URL, destination_folder, image.name) # for static files
+            image_url = os.path.join(settings.STATIC_ROOT, destination_folder, image.name)
             print(image_url)
             return render(request, 'compressor/show.html', )
     else:
