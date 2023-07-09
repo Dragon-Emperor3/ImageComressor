@@ -9,6 +9,7 @@ class ImageUploadForm(forms.Form):
         initial= 95,
         widget=forms.NumberInput(attrs={'type': 'range'})
     )
+    
 
 class ImageCompressForm(forms.Form):    
     compression_level = forms.IntegerField(
@@ -19,13 +20,13 @@ class ImageCompressForm(forms.Form):
         widget=forms.NumberInput(attrs={'type': 'range'})
     )
 
+    
 class ImageDownloadForm(forms.Form):
     DOWNLOAD_CHOICES = [
         ('JPEG', 'JPEG'),
         ('PNG', 'PNG'),
         ('BMP', 'BMP'),
-        ('TIFF', 'TIFF'),
-        ('GIF', 'GIF'),
+        ('TIFF', 'TIFF'),        
     ]
 
     download_type = forms.ChoiceField(

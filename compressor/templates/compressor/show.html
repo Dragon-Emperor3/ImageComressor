@@ -3,15 +3,28 @@
 
 {% block content %}
 
-    <table>
-        <tr>Original Size{{o_size}}<tr>
-        <tr><img src="{% static 'images/'|add:image_name %}"> <tr>
-        <tr>Compressed Size{{c_size}}<tr>
-        <tr><img src={% static '/images/compressed.jpg' %}> <tr>
-    </table>
-    <a href={% url 'show' %} >Compress More</a>
-    <a href={% url 'download' %} >Download</a>
+    <div class='main' border: 2px solid #000;>
+        <h2>Result:</h2>
+        <table>
+            <tr>
+                <th >Original Size{{o_size}}</th>
+                <th >Compressed Size{{c_size}}</th>
+            </tr> 
+            
+            <tr>
+                <td><img src="{% static 'images/'|add:image_name %}"></td>
+                <td><img src={% static '/images/compressed.jpg' %}></td>
+            </tr>
+        </table>
+        <div class='d-flex justify-content-between mt-10'>
+            <a href={% url 'home' %} class="btn btn-warning">Back</a>
+            <div>
+                <a href={% url 'show' %} class="btn btn-success">Compress More</a>
+                <a href={% url 'download' %} class="btn btn-dark">Download</a>
+            <div>
+        </div>
 
+    </div>
    
     
 {% endblock content %}

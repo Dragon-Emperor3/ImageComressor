@@ -2,17 +2,29 @@
 {% load static %}
 
 {% block content %}
-<h1>Image Compressor</h1>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    
-    {{ form.image }}
-    <label for="compression_level">Compression Level:</label>
-    {{form.compression_level}}
-    <span id="compression_level_value">{{ form.compression_level.initial }}</span>
-    
-    <button type="submit">Compress</button>
-</form>
+<div class='main'> 
+            <h1>Image Compressor</h1>            
+            <div class="" id="container">
+                <form method="post" action="" class="input-group form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div >
+                        <label>Upload Your Image here:&ensp;&ensp;&ensp;</label>
+                        
+                        {{ form.image }}
+                    </div>
+                   
+                    <div style="padding-block:30px;">
+                        <label for="compression_level">Compression Level:&ensp;&ensp;&ensp;</label>
+                        {{form.compression_level}}
+                        <span id="compression_level_value">{{ form.compression_level.initial }}</span>
+                    <div>
+                        
+                    <button class="btn btn-dark" type="submit" style='width:10vw; min-width:100px; margin-top:20px;' data-mdb-ripple-color="dark">
+                        Compress
+                    </button>
+                </form>
+            </div>
+</div>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

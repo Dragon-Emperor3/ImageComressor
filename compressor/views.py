@@ -93,10 +93,12 @@ def download(request):
             #destination_path = os.path.join(settings.STATICFILES_DIRS[0], 'images/')
             destination_path = os.path.join(settings.STATIC_ROOT, 'images/') # for deployment
             img= cv2.imread(destination_path+ 'compressed.jpg')
-            image_name= 'compressed.' + str(download_type)
+            image_name= 'compressed.' + str(download_type).lower()
             cv2.imwrite(destination_path + image_name, img)
-            context= {'image_name': image_name}
-
+            
+            
+            context= {'download_url': image_name}
+            print(context['download_url'])
             return render(request, 'compressor/download.html', context)
 
     else:

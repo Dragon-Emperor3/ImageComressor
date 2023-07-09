@@ -3,11 +3,23 @@
 
 {% block content %}
 
-<form method="post" >
-    {% csrf_token %}        
-    {{form}}
-    
-    <button type="submit">Download</button>
-</form>
+<div class='main'>
+  <h3>Choose your preferred image file format for the download</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+          {% if download_url %}
+          
+            <a class="btn btn-warning" href={% url 'download' %}>Back</a>
+            <a class="btn btn-success" href={% static 'images/'|add:download_url %} download>Download Image</a>
+          {% else %}
+          <div class='d-flex justify-content-around mt-10'>                
+            <button class="btn btn-dark" type="submit" style='width:10vw; min-width:100px; margin-top:20px;' data-mdb-ripple-color="dark">Download</button>
+          {% endif %}
+    </form>
+</div>  
+
+  
 
 {% endblock content %}
