@@ -6,5 +6,30 @@ class ImageUploadForm(forms.Form):
         label='Compression Level',
         min_value=1,
         max_value=100,
+        initial= 95,
         widget=forms.NumberInput(attrs={'type': 'range'})
+    )
+
+class ImageCompressForm(forms.Form):    
+    compression_level = forms.IntegerField(
+        label='Compression Level',
+        min_value=1,
+        max_value=100,
+        initial= 95,
+        widget=forms.NumberInput(attrs={'type': 'range'})
+    )
+
+class ImageDownloadForm(forms.Form):
+    DOWNLOAD_CHOICES = [
+        ('JPEG', 'JPEG'),
+        ('PNG', 'PNG'),
+        ('BMP', 'BMP'),
+        ('TIFF', 'TIFF'),
+        ('GIF', 'GIF'),
+    ]
+
+    download_type = forms.ChoiceField(
+        label='Choose The Image Type',
+        choices=DOWNLOAD_CHOICES,
+        widget=forms.RadioSelect(attrs={'type': 'radio'})
     )

@@ -1,14 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Image Compressor</title>
-</head>
-<body>
-    <h1>Image Compressor</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit">Compress</button>
-    </form>
-</body>
-</html>
+{% include 'compressor/main.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Image Compressor</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    {{ form.image }}
+    <label for="compression_level">Compression Level:</label>
+    {{form.compression_level}}
+    <span id="compression_level_value">{{ form.compression_level.initial }}</span>
+    
+    <button type="submit">Compress</button>
+</form>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Update the value of the span dynamically when the range bar value changes
+        $('input[type="range"]').on('input', function() {
+            $('#compression_level_value').text($(this).val());
+        });
+    });
+</script>
+{% endblock content %}

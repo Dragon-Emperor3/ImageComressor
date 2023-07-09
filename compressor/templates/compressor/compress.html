@@ -1,0 +1,30 @@
+{% extends 'compressor/main.html' %}
+{% load static %}
+
+{% block content %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}        
+    <label for="compression_level">Compression Level:</label>
+    <input type="range" name="compression_level" id="compression_level" min="1" max="100" value="{{ form.compression_level.initial }}">
+    <span id="compression_level_value">{{ form.compression_level.initial }}</span>
+    
+    <button type="submit">Compress</button>
+</form>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Update the value of the span dynamically when the range bar value changes
+    $('input[type="range"]').on('input', function() {
+        $('#compression_level_value').text($(this).val());
+    });
+});
+</script>
+
+{% endblock content %}
+
+
+    
+
