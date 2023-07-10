@@ -23,7 +23,7 @@ class ImageCompressForm(forms.Form):
     
 class ImageDownloadForm(forms.Form):
     DOWNLOAD_CHOICES = [
-        ('JPEG', 'JPEG'),
+        ('JPG', 'JPG'),
         ('PNG', 'PNG'),
         ('BMP', 'BMP'),
         ('TIFF', 'TIFF'),        
@@ -32,5 +32,6 @@ class ImageDownloadForm(forms.Form):
     download_type = forms.ChoiceField(
         label='Choose The Image Type',
         choices=DOWNLOAD_CHOICES,
+        initial= 'JPG',
         widget=forms.RadioSelect(attrs={'type': 'radio'})
     )

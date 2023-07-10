@@ -5,21 +5,24 @@
 
 <div class='main'>
   <h3>Choose your preferred image file format for the download</h3>
+  <p> Note:Choosing other image type may change the size, its better to choose the default one [JPG is preferred]</p>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         
           {% if download_url %}
-          
-            <a class="btn btn-warning" href={% url 'download' %}>Back</a>
+          <div class='d-flex justify-content-between  '>           
+            <a class="btn btn-warning" href={% url 'download' %}>Back</a>            
             <a class="btn btn-success" href={% static 'images/'|add:download_url %} download>Download Image</a>
+            <a class="btn btn-info" href={% url 'home' %} > Compress Another Image</a>
+          </div>
+            
           {% else %}
           <div class='d-flex justify-content-around mt-10'>                
             <button class="btn btn-dark" type="submit" style='width:10vw; min-width:100px; margin-top:20px;' data-mdb-ripple-color="dark">Download</button>
+            <a class="btn btn-info" href={% url 'home' %} style=' margin-top:20px;'> Compress Another Image</a>
           {% endif %}
     </form>
-</div>  
-
-  
+</div>    
 
 {% endblock content %}

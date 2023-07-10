@@ -3,11 +3,12 @@ from .forms import ImageUploadForm, ImageCompressForm, ImageDownloadForm
 from django.conf import settings
 import cv2
 import os
-from .helper import delete, print_file_size
+from .helper import delete, print_file_size, calculate_percentage
 
 # Create your views here.
-
+compression_level= 95
 def home(request):
+    global compression_level
     if request.method == 'POST':
         form = ImageUploadForm(request.POST, request.FILES)
         if form.is_valid():
@@ -37,10 +38,16 @@ def home(request):
             #image_url = os.path.join(settings.STATIC_URL, destination_folder, image.name) # for static files
             image_url = os.path.join(settings.STATIC_ROOT, destination_folder, image.name)  # for deployment
             print(image_url)
+
+            original= print_file_size(save_path)
+            compressed= print_file_size(destination_path+ "compressed.jpg")
+            percentage= calculate_percentage(original,compressed)
+            print(f"percentage={percentage}")
             context= {
                     'o_size': print_file_size(save_path), 
                     'c_size': print_file_size(destination_path+ "compressed.jpg"),
                     'image_name': image.name,
+                    'percentage': percentage
                 }
             return render(request, 'compressor/show.html', context)   
 
@@ -54,6 +61,7 @@ def home(request):
 
 
 def show(request):
+    global compression_level
     if request.method == 'POST':
         form = ImageCompressForm(request.POST)
         if form.is_valid():
@@ -74,10 +82,15 @@ def show(request):
             #image_url = os.path.join(settings.STATIC_URL, 'images/', image_name)
             image_url = os.path.join(settings.STATIC_URL, 'images/', image_name) 
             print(image_url)
+            original= print_file_size(save_path)
+            compressed= print_file_size(destination_path+ "compressed.jpg")
+            percentage= calculate_percentage(original,compressed)
+            print(f"percentage={percentage}")
             context= {
-                    'o_size': print_file_size(save_path), 
-                    'c_size': print_file_size(destination_path+ "compressed.jpg"),
+                    'o_size': original, 
+                    'c_size': compressed,
                     'image_name': image_name,
+                    'percentage': percentage,
                 }
             return render(request, 'compressor/show.html', context)            
     else:
@@ -94,8 +107,8 @@ def download(request):
             destination_path = os.path.join(settings.STATIC_ROOT, 'images/') # for deployment
             img= cv2.imread(destination_path+ 'compressed.jpg')
             image_name= 'compressed.' + str(download_type).lower()
-            cv2.imwrite(destination_path + image_name, img)
-            
+            # cv2.imwrite(destination_path + image_name, img)
+            cv2.imwrite(destination_path+ image_name, img, [cv2.IMWRITE_JPEG_QUALITY, compression_level])
             
             context= {'download_url': image_name}
             print(context['download_url'])
